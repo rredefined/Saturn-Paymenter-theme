@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RenderByte - Interactive Challenge</title>
+    <title>RenderByte - Security Check</title>
     <style>
         body {
-            background-color: #1a1325;
-            color: white;
+            background-color: #0a1118;
+            color: #e5e7eb;
             font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
@@ -15,32 +15,58 @@
             height: 100vh;
             margin: 0;
         }
+
         .container {
             text-align: center;
-            background: #2a1d3c;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            background: #151f28;
+            padding: 32px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.6);
+            max-width: 420px;
+            width: 100%;
         }
+
+        .logo {
+            width: 140px;
+            margin-bottom: 20px;
+        }
+
         .title {
             font-size: 24px;
             font-weight: bold;
-            color: #c084fc;
+            color: #ffffff;
+            margin-bottom: 6px;
         }
-        .challenge-box {
-            background: #3a2b4f;
-            padding: 20px;
-            margin-top: 20px;
-            border-radius: 5px;
-        }
-        .footer {
-            margin-top: 20px;
+
+        .subtitle {
             font-size: 14px;
-            color: #b3a3c2;
-        }
-        .logo {
-            width: 150px;
+            color: #a1a1aa;
             margin-bottom: 20px;
+        }
+
+        .challenge-box {
+            background: #10181e;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 18px;
+        }
+
+        .info {
+            font-size: 13px;
+            color: #9ca3af;
+            margin-bottom: 18px;
+        }
+
+        .footer {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .accent {
+            color: #0a9875;
+            font-weight: 500;
         }
     </style>
 </head>
@@ -48,19 +74,22 @@
     <div class="container">
         <img src="/assets/logo.png" alt="RenderByte Logo" class="logo">
 
-        <div class="title">Interactive Challenge</div>
-        <p>Prove you're human and help us keep RenderByte safe and secure.</p>
+        <div class="title">Security Verification</div>
+        <div class="subtitle">
+            Please complete the check to continue to <span class="accent">RenderByte</span>
+        </div>
 
         <div class="challenge-box">
             ::CAPTCHA_BOX::
         </div>
 
-        <p>Once you've completed the challenge, you will be redirected</p>
+        <div class="info">
+            This helps us protect our network from malicious traffic.
+        </div>
 
         <div class="footer">
-            This is a Security Check that is managed by RenderByte Hosting and @Eiro.tf.
+            Managed by RenderByte Hosting · Powered by Cloudflare
         </div>
     </div>
 </body>
 </html>
-
