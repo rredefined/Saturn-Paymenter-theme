@@ -9,10 +9,11 @@
             --bg-deep: #0f0a18;
             --panel-bg: #1e152d;
             --accent: #c084fc;
-            --accent-glow: rgba(192, 132, 252, 0.5);
+            --accent-glow: rgba(192, 132, 252, 0.6);
             --text-main: #ffffff;
             --text-dim: #9486aa;
             --border-glow: rgba(192, 132, 252, 0.2);
+            --sync-speed: 4s; /* Controlled timing for synchronization */
         }
 
         body {
@@ -39,13 +40,12 @@
             z-index: -1;
         }
 
-        /* The Main Vault Container */
         .vault-card {
             background: var(--panel-bg);
             padding: 50px 40px;
             border-radius: 2px;
             position: relative;
-            max-width: 520px;
+            max-width: 540px;
             width: 95%;
             text-align: center;
             border: 1px solid var(--border-glow);
@@ -59,7 +59,7 @@
             100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
         }
 
-        /* Header Layout: Logo + Text */
+        /* Header Layout */
         .header-brand {
             display: flex;
             align-items: center;
@@ -69,24 +69,31 @@
         }
 
         .logo {
-            width: 80px; /* Adjusted size for side-by-side layout */
+            width: 70px;
             filter: drop-shadow(0 0 10px var(--accent-glow));
         }
 
+        /* SYNCED TEXT ANIMATION */
         .brand-text {
             font-size: 28px;
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 2px;
-            background: linear-gradient(90deg, #fff, var(--accent), #fff);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shine 4s linear infinite;
+            color: #fff;
+            position: relative;
+            animation: syncPulse var(--sync-speed) infinite ease-in-out;
         }
 
-        @keyframes shine {
-            to { background-position: 200% center; }
+        @keyframes syncPulse {
+            0%, 100% { 
+                text-shadow: 0 0 5px rgba(255,255,255,0.2);
+                transform: scale(1);
+            }
+            50% { 
+                text-shadow: 0 0 20px var(--accent), 0 0 30px var(--accent-glow);
+                color: var(--accent);
+                transform: scale(1.02);
+            }
         }
 
         .divider {
@@ -94,39 +101,43 @@
             width: 2px;
             background: var(--accent);
             opacity: 0.5;
+            animation: syncDivider var(--sync-speed) infinite ease-in-out;
         }
 
-        .title-wrap {
-            margin-bottom: 15px;
+        @keyframes syncDivider {
+            0%, 100% { opacity: 0.3; transform: scaleY(1); }
+            50% { opacity: 1; transform: scaleY(1.2); box-shadow: 0 0 15px var(--accent); }
         }
 
         .title {
-            font-size: 1.2rem;
+            font-size: 0.9rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 6px;
             color: var(--text-dim);
-            margin: 0;
+            margin: 0 0 20px 0;
         }
 
+        /* SYNCED RADAR BOX */
         .challenge-area {
-            background: rgba(0,0,0,0.4);
+            background: rgba(0,0,0,0.5);
             margin: 25px 0;
-            padding: 30px;
-            border: 1px solid rgba(255,255,255,0.05);
+            padding: 35px;
+            border: 1px solid rgba(192, 132, 252, 0.1);
             position: relative;
             min-height: 100px;
             display: flex;
             align-items: center;
             justify-content: center;
+            border-radius: 4px;
         }
 
         .radar-sweep {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, transparent 300deg, var(--accent-glow) 360deg);
-            opacity: 0.15;
-            animation: rotate 4s linear infinite;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, transparent 300deg, var(--accent) 360deg);
+            opacity: 0.2;
+            animation: rotate var(--sync-speed) linear infinite;
             pointer-events: none;
         }
 
@@ -135,36 +146,40 @@
             to { transform: rotate(360deg); }
         }
 
+        /* Pulse ring inside the radar */
+        .challenge-area::before {
+            content: "";
+            position: absolute;
+            width: 80%; height: 80%;
+            border: 1px solid var(--accent);
+            border-radius: 50%;
+            opacity: 0;
+            animation: ringPulse var(--sync-speed) infinite ease-out;
+        }
+
+        @keyframes ringPulse {
+            0% { transform: scale(0.5); opacity: 0.5; }
+            100% { transform: scale(1.2); opacity: 0; }
+        }
+
         .footer-text {
             font-size: 11px;
             color: var(--text-dim);
             letter-spacing: 1px;
             text-transform: uppercase;
-            margin-top: 20px;
+            margin-top: 25px;
         }
 
-        .accent-text {
-            color: var(--accent);
-            font-weight: bold;
-        }
+        .accent-text { color: var(--accent); font-weight: bold; }
 
-        /* Decorative brackets */
-        .vault-card::before {
-            content: "";
-            position: absolute;
-            top: 15px; left: 15px;
-            width: 30px; height: 30px;
-            border-top: 2px solid var(--accent);
-            border-left: 2px solid var(--accent);
+        /* Brackets */
+        .vault-card::before, .vault-card::after {
+            content: ""; position: absolute; width: 30px; height: 30px;
+            border: 2px solid var(--accent);
+            animation: syncDivider var(--sync-speed) infinite ease-in-out;
         }
-        .vault-card::after {
-            content: "";
-            position: absolute;
-            bottom: 15px; right: 15px;
-            width: 30px; height: 30px;
-            border-bottom: 2px solid var(--accent);
-            border-right: 2px solid var(--accent);
-        }
+        .vault-card::before { top: 15px; left: 15px; border-right: 0; border-bottom: 0; }
+        .vault-card::after { bottom: 15px; right: 15px; border-left: 0; border-top: 0; }
     </style>
 </head>
 <body>
@@ -178,12 +193,10 @@
             <div class="brand-text">RenderByte Shield</div>
         </div>
 
-        <div class="title-wrap">
-            <h1 class="title">Security Clearance</h1>
-        </div>
+        <h1 class="title">System Verification</h1>
 
-        <p style="color: var(--text-dim); font-size: 13px; margin: 0 auto 20px; max-width: 350px;">
-            Our security nodes are validating your session. Please complete the interactive challenge below.
+        <p style="color: var(--text-dim); font-size: 13px; margin-bottom: 25px;">
+            Establishing encrypted handshake with RenderByte nodes...
         </p>
 
         <div class="challenge-area">
@@ -194,9 +207,7 @@
         </div>
 
         <div class="footer-text">
-            Protected by <span class="accent-text">RenderByte Hosting</span> & <span class="accent-text">@Eiro.tf</span>
-            <br>
-            <span style="opacity: 0.5; font-size: 9px; margin-top: 5px; display: block;">System Integrity: 100%</span>
+            Security Status: <span class="accent-text">Active</span> | Engine: <span class="accent-text">@Eiro.tf</span>
         </div>
     </div>
 
