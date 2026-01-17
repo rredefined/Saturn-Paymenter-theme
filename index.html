@@ -3,93 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RenderByte - Security Check</title>
+    <title>Secure Access | RenderByte</title>
     <style>
+        :root {
+            --bg-deep: #0f0a18;
+            --panel-bg: #1e152d;
+            --accent: #c084fc;
+            --accent-glow: rgba(192, 132, 252, 0.5);
+            --text-main: #ffffff;
+            --text-dim: #9486aa;
+            --border-glow: rgba(192, 132, 252, 0.2);
+        }
+
         body {
-            background-color: #020617; /* neutral dark */
-            color: #ecfdf5;
-            font-family: Arial, sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            overflow: hidden;
         }
 
-        .container {
-            text-align: center;
-            background: #0b1220; /* neutral dark, NOT green */
-            padding: 32px;
-            border-radius: 18px;
-            border: 2px solid #22c55e;
-            box-shadow: 0 0 35px rgba(34, 197, 94, 0.25);
-            max-width: 420px;
-            width: 100%;
+        /* Animated Backdrop */
+        .cyber-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                linear-gradient(rgba(15, 10, 24, 0.8), rgba(15, 10, 24, 0.8)),
+                repeating-linear-gradient(0deg, transparent 0, transparent 1px, rgba(192, 132, 252, 0.03) 1px, rgba(192, 132, 252, 0.03) 2px),
+                repeating-linear-gradient(90deg, transparent 0, transparent 1px, rgba(192, 132, 252, 0.03) 1px, rgba(192, 132, 252, 0.03) 2px);
+            background-size: 100% 4px, 40px 40px, 40px 40px;
+            z-index: -1;
         }
+
+        /* The Main Vault Container */
+        .vault-card {
+            background: var(--panel-bg);
+            padding: 50px 40px;
+            border-radius: 2px; /* Sharp industrial corners */
+            position: relative;
+            max-width: 480px;
+            width: 90%;
+            text-align: center;
+            border: 1px solid var(--border-glow);
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+            clip-path: polygon(10% 0, 90% 0, 100% 10%, 100% 90%, 90% 100%, 10% 100%, 0 90%, 0 10%); /* Hexagonal cut corners */
+            animation: emerge 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        @keyframes emerge {
+            0% { opacity: 0; transform: scale(0.9) translateY(30px); filter: blur(10px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+        }
+
+        /* Decorative Corner Brackets */
+        .vault-card::before, .vault-card::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent);
+        }
+        .vault-card::before { top: 15px; left: 15px; border-right: 0; border-bottom: 0; }
+        .vault-card::after { bottom: 15px; right: 15px; border-left: 0; border-top: 0; }
 
         .logo {
-            width: 140px;
-            margin-bottom: 18px;
+            width: 160px;
+            margin-bottom: 30px;
+            filter: drop-shadow(0 0 10px var(--accent-glow));
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .title-wrap {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 15px;
         }
 
         .title {
-            font-size: 26px;
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #fff;
+            margin: 0;
+        }
+
+        .title-glitch {
+            position: absolute;
+            top: 0; left: 0; width: 100%;
+            height: 100%;
+            color: var(--accent);
+            opacity: 0.5;
+            z-index: -1;
+            animation: glitch 3s infinite;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            2% { transform: translate(-3px, 2px); }
+            4% { transform: translate(3px, -1px); }
+            6% { transform: translate(0); }
+        }
+
+        .challenge-area {
+            background: rgba(0,0,0,0.4);
+            margin: 30px 0;
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Radar Sweep Animation */
+        .radar-sweep {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, transparent 300deg, var(--accent-glow) 360deg);
+            border-radius: 50%;
+            opacity: 0.2;
+            animation: rotate 4s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .footer-text {
+            font-size: 11px;
+            color: var(--text-dim);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 20px;
+        }
+
+        .accent-text {
+            color: var(--accent);
             font-weight: bold;
-            color: #22c55e; /* GREEN */
-            margin-bottom: 6px;
-        }
-
-        .subtitle {
-            font-size: 14px;
-            color: #a3e635; /* LIME */
-            margin-bottom: 22px;
-        }
-
-        .challenge-box {
-            background: #020617;
-            padding: 22px;
-            border-radius: 14px;
-            border: 2px dashed #a3e635;
-            margin-bottom: 18px;
-        }
-
-        .info {
-            font-size: 13px;
-            color: #d1fae5;
-            margin-bottom: 18px;
-        }
-
-        .footer {
-            font-size: 12px;
-            color: #86efac;
-        }
-
-        .accent {
-            color: #a3e635;
-            font-weight: 600;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <img src="/assets/logo.png" alt="RenderByte Logo" class="logo">
 
-        <div class="title">Security Check</div>
-        <div class="subtitle">
-            Verify to continue to <span class="accent">RenderByte</span>
+    <div class="cyber-bg"></div>
+
+    <div class="vault-card">
+        <img src="/assets/logo.png" alt="RenderByte" class="logo">
+
+        <div class="title-wrap">
+            <h1 class="title">SHIELD ACTIVE</h1>
+            <div class="title-glitch">SHIELD ACTIVE</div>
         </div>
 
-        <div class="challenge-box">
-            ::CAPTCHA_BOX::
+        <p style="color: var(--text-dim); font-size: 14px; margin: 0 auto 20px; max-width: 300px;">
+            RenderByte nodes are checking your browser for security clearance.
+        </p>
+
+        <div class="challenge-area">
+            <div class="radar-sweep"></div>
+            <div style="z-index: 5;">
+                ::CAPTCHA_BOX::
+            </div>
         </div>
 
-        <div class="info">
-            This step helps prevent bots and abusive traffic.
-        </div>
-
-        <div class="footer">
-            Protected by Cloudflare · RenderByte Hosting
+        <div class="footer-text">
+            Security Layer: <span class="accent-text">Managed by @Eiro.tf</span><br>
+            Authorized Access Only
         </div>
     </div>
+
 </body>
 </html>
