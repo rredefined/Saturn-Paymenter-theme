@@ -125,6 +125,10 @@
             pointer-events: none;
         }
 
+        .cf-box {
+            display: none; /* visually hidden but REQUIRED */
+        }
+
         .footer-text {
             font-size: 11px;
             color: var(--text-dim);
@@ -174,19 +178,24 @@
 
     <p style="color: var(--text-dim); font-size: 14px;">
         Cloudflare was unable to complete this request due to a configuration,
-        security setting, or origin connectivity issue.
+        security policy, or origin connectivity issue.
     </p>
 
     <div class="error-box">
+        <!-- REQUIRED BY CLOUDFLARE -->
+        <div class="cf-box">
+            ::CLOUDFLARE_ERROR_1000S_BOX::
+        </div>
+
         <p style="z-index: 2; position: relative; font-size: 14px;">
-            This error is not caused by your browser or network.<br>
-            Please try again later or notify the site administrator
-            if the issue persists.
+            This issue is not caused by your browser or network.<br>
+            Please try again later or contact the site administrator
+            if the problem persists.
         </p>
     </div>
 
     <div class="footer-text">
-        Network Status: <span class="accent-text">Interruption Detected</span> |
+        Network Status: <span class="accent-text">Configuration Interruption</span> |
         Protected by <span class="accent-text">Cloudflare × RenderByte</span>
     </div>
 </div>
